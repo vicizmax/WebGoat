@@ -15,9 +15,6 @@ public class LessonSession {
 
   private Map<String, Object> userSessionData = new HashMap<>();
 
-  /** Default constructor initializing an empty session. */
-  public LessonSession() {}
-
   /**
    * Retrieves the value associated with the given key.
    *
