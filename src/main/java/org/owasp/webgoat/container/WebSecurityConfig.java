@@ -25,6 +25,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+  private static final String LOGIN_PAGE = "/login";
+
   private final UserService userDetailsService;
 
   @Bean
@@ -47,7 +49,7 @@ public class WebSecurityConfig {
         .formLogin(
             login ->
                 login
-                    .loginPage("/login")
+                    .loginPage(LOGIN_PAGE)
                     .defaultSuccessUrl("/welcome.mvc", true)
                     .usernameParameter("username")
                     .passwordParameter("password")
@@ -55,14 +57,14 @@ public class WebSecurityConfig {
         .oauth2Login(
             oidc -> {
               oidc.defaultSuccessUrl("/login-oauth.mvc");
-              oidc.loginPage("/login");
+              oidc.loginPage(LOGIN_PAGE);
             })
         .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
         .csrf(csrf -> csrf.disable())
         .headers(headers -> headers.disable())
         .exceptionHandling(
             handling ->
-                handling.authenticationEntryPoint(new AjaxAuthenticationEntryPoint("/login")))
+                handling.authenticationEntryPoint(new AjaxAuthenticationEntryPoint(LOGIN_PAGE)))
         .build();
   }
 
